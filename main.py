@@ -9,7 +9,13 @@ GREEN = (0,255,0)
 BLUE = (0,0,255)
 BROWN = (179,169,141)
 
-rocket_vertices = ((-1,-1),(0,1),(1,-1),(-1,-1))
+# key press event numbers
+UP = 273
+DOWN = 274
+LEFT = 275
+RIGHT = 276
+
+rocket_vertices = ((-1,-1),(0,1),(1,-1),(-1,-1),(-0.5,-1.25),(0,-1),(0.5,-1.25),(1,-1))
 
 def transform(vertices, center, orient, scale):
 	screen = []
@@ -47,14 +53,16 @@ if __name__ == "__main__":
 			if event.type == pygame.QUIT:
 				done = True
 			if event.type == pygame.KEYDOWN:
-				if event.key == 276:
+				if event.key == LEFT:
 					orient += -0.05
-				if event.key == 275:
+				if event.key == RIGHT:
 					orient += 0.05
-				if event.key == 273:
-					center[0] += -5
-				if event.key == 274:
-					center[0] += 5
+				if event.key == UP:
+					center[0] += -5*cos(orient)
+					center[1] += 5*sin(orient)
+				if event.key == DOWN:
+					center[0] += 5*cos(orient)
+					center[1] += -5*sin(orient)
 
 					
 		# --- Game logic should go here
