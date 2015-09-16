@@ -46,26 +46,28 @@ if __name__ == "__main__":
 	center = [400,300]
 	orient = 0
 	scale = 20
-
+	speed = 0
+	
 	while not done:
 		
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				done = True
 			if event.type == pygame.KEYDOWN:
-				if event.key == LEFT:
+				if event.key == pygame.K_LEFT:
 					orient += -0.05
-				if event.key == RIGHT:
+				if event.key == pygame.K_RIGHT:
 					orient += 0.05
-				if event.key == UP:
-					center[0] += -5*cos(orient)
-					center[1] += 5*sin(orient)
-				if event.key == DOWN:
-					center[0] += 5*cos(orient)
-					center[1] += -5*sin(orient)
+				if event.key == pygame.K_DOWN:
+					speed += 1
+				if event.key == pygame.K_UP:
+					speed -= 1
 
 					
 		# --- Game logic should go here
+
+		center[0] += speed*cos(orient+pi/2)
+		center[1] += speed*sin(orient+pi/2)
 
 		screen.fill(WHITE)
 				
