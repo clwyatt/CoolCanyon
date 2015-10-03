@@ -36,6 +36,9 @@ if __name__ == "__main__":
 	screen = pygame.display.set_mode(size)
 
 	pygame.display.set_caption("Cool Canyon")
+
+	background = pygame.image.load('background.png')
+	background_rect = background.get_rect()
 	
  	# Loop until the user clicks the close button.
 	done = False
@@ -46,30 +49,37 @@ if __name__ == "__main__":
 	center = [400,300]
 	orient = 0
 	scale = 20
-	speed = 0
+	forward_speed = 0
+	orient = 0
 	
 	while not done:
+
+		screen.blit(background,background_rect)
 		
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				done = True
 			if event.type == pygame.KEYDOWN:
-				if event.key == pygame.K_LEFT:
-					orient += -0.05
-				if event.key == pygame.K_RIGHT:
-					orient += 0.05
 				if event.key == pygame.K_DOWN:
-					speed += 1
+					forward_speed += 0.5
 				if event.key == pygame.K_UP:
-					speed -= 1
+					forward_speed -= 0.5
 
+		keys = pygame.key.get_pressed() 
+		if keys[pygame.K_LEFT]:
+			orient += -0.02
+		if keys[pygame.K_RIGHT]:
+			orient += 0.02
 					
 		# --- Game logic should go here
 
-		center[0] += speed*cos(orient+pi/2)
-		center[1] += speed*sin(orient+pi/2)
-
-		screen.fill(WHITE)
+		center[0] += forward_speed*cos(orient+pi/2)
+		center[1] += forward_speed*sin(orient+pi/2)
+		
+		if background.get_at((int(center[0]), int(center[1]))) != (46,127,227, 255): 
+			forward_speed = 0
+		   		
+		###screen.fill(WHITE)
 				
 		# --- Drawing code should go here
 		draw_rocket(screen, center, orient, scale)
