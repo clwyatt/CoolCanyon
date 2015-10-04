@@ -37,7 +37,7 @@ if __name__ == "__main__":
 
 	pygame.display.set_caption("Cool Canyon")
 
-	background = pygame.image.load('background.png')
+	background = pygame.image.load('canyon1.png')
 	background_rect = background.get_rect()
 	
  	# Loop until the user clicks the close button.
@@ -46,11 +46,10 @@ if __name__ == "__main__":
 	# Used to manage how fast the screen updates
 	clock = pygame.time.Clock()
 
-	center = [400,300]
-	orient = 0
+	center = [100,200]
 	scale = 20
 	forward_speed = 0
-	orient = 0
+	orient = pi
 	
 	while not done:
 
@@ -61,10 +60,12 @@ if __name__ == "__main__":
 				done = True
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_DOWN:
-					forward_speed += 0.5
+					forward_speed += 0.1
+					if(forward_speed > 1): forward_speed = 1
 				if event.key == pygame.K_UP:
-					forward_speed -= 0.5
-
+					forward_speed -= 0.1
+					if(forward_speed < -1): forward_speed = -1
+					
 		keys = pygame.key.get_pressed() 
 		if keys[pygame.K_LEFT]:
 			orient += -0.02
